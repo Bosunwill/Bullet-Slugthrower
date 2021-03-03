@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gun : MonoBehaviour, IItem
+public class FlashLight : MonoBehaviour, IItem
 {
-    public Rigidbody Projectile;
-    bool shoot = true;    
+    //public Rigidbody Projectile;
+    [SerializeField]
+    Light flashlight;
+    bool canSwitchLight = true;
+    
 
    public void Pickup(Transform hand)
    {
@@ -19,20 +22,23 @@ public class Gun : MonoBehaviour, IItem
    }
    public void Use()
    {
-       Debug.Log("<color=red>Pow!</color>");
-       if(shoot) {
-       Rigidbody iProjectile = Instantiate(Projectile, transform.position, transform.rotation) as Rigidbody;
-        iProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * 20, ForceMode.Impulse);
-        shoot = false;
-        StartCoroutine(Wait());
-       //iProjectile .velocity = transform.TransformDirection(new Vector3(0, 0, speed + 20));
+       Debug.Log("Using my light");
+       if(canSwitchLight)
+       {
+       flashlight.enabled = !flashlight.enabled;
+       canSwitchLight = false;
+       StartCoroutine(Wait());
        }
+      // Rigidbody iProjectile = Instantiate(Projectile, transform.position, transform.rotation) as Rigidbody;
+        //iProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * 20, ForceMode.Impulse);
+       //iProjectile .velocity = transform.TransformDirection(new Vector3(0, 0, speed + 20));
+
    }
    public void Drop()
    {
        Debug.Log("Dropping our item!!");
        this.gameObject.transform.SetParent(null);
-       //this.transform.localPosition = Vector3.forward;
+       //this.transform.localPosition = Vector3.zero;
        //this.transform.localRotation = Quaternion.identity;
        this.transform.Translate(0, -3, 7);
        this.GetComponent<Rigidbody>().useGravity = true;
@@ -40,9 +46,9 @@ public class Gun : MonoBehaviour, IItem
        this.GetComponent<Rigidbody>().AddForce(transform.forward * 10, ForceMode.Impulse);
        this.GetComponent<Collider>().enabled = true; 
    }
-   IEnumerator Wait()
-   {
-       yield return new WaitForSeconds(0.2f);
-       shoot = true;
-   }
+    IEnumerator Wait() {
+       yield return new WaitForSeconds(1);
+       canSwitchLight = true;
+       }
+   
 }

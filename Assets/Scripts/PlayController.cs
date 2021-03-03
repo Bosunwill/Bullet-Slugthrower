@@ -7,12 +7,12 @@ public class PlayController : MonoBehaviour
    [SerializeField]
     Transform hand;
      //This is a hand position empty child of Camera
-     Gun heldItem;
+     IItem heldItem;
   
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T)){
+        if (Input.GetKey(KeyCode.T)){
         if(heldItem != null)
         {
             Debug.Log("I've pressed left mouse Button");
@@ -38,18 +38,12 @@ public class PlayController : MonoBehaviour
          if(other.gameObject.CompareTag("Item")) 
          {
              Debug.Log("I have hit ");
-             heldItem = other.GetComponent<Gun>();
+             if(heldItem != null){
+                 return;
+             }
+             heldItem = other.GetComponent<IItem>();
              heldItem.Pickup(hand);
              
          }
-        // if (other.gameObject.CompareTag("Pickup"))
-         //{
-           //  Destroy(other.gameObject);
-
-         //}
-        // if(other.gameObject.CompareTag("Coin")){
-          //   Coin = +1;
-            // Destroy(other.gameObject);
-        //}
     }
 }
