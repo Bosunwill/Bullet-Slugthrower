@@ -10,7 +10,7 @@ public CharacterController controller;
     public float movement = 10f, gravity = -9.81f;
     Vector3 velocity;
     public Transform groundCheck;
-    public float groundDistance = 0.4f, jumpHeight = 3f;
+    public float groundDistance = 0.4f, jumpHeight = 20f;
     public LayerMask groundMask;
     private float dirX, dirZ;
     bool isGrounded;

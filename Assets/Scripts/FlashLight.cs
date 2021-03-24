@@ -8,7 +8,6 @@ public class FlashLight : MonoBehaviour, IItem
     [SerializeField]
     Light flashlight;
     bool canSwitchLight = true;
-    
 
    public void Pickup(Transform hand)
    {
@@ -19,6 +18,14 @@ public class FlashLight : MonoBehaviour, IItem
        this.GetComponent<Rigidbody>().useGravity = true;
        this.GetComponent<Rigidbody>().isKinematic = true;
        this.GetComponent<Collider>().enabled = false; 
+
+       if (RenderSettings.skybox.HasProperty("_Tint"))
+       {
+           RenderSettings.skybox.SetColor("_Tint", Color.black);
+       } else if (RenderSettings.skybox.HasProperty("_SkyTint"))
+       {
+           RenderSettings.skybox.SetColor("_SkyTint", Color.black);
+       }
    }
    public void Use()
    {
@@ -44,7 +51,14 @@ public class FlashLight : MonoBehaviour, IItem
        this.GetComponent<Rigidbody>().useGravity = true;
        this.GetComponent<Rigidbody>().isKinematic = true;
        this.GetComponent<Rigidbody>().AddForce(transform.forward * 10, ForceMode.Impulse);
-       this.GetComponent<Collider>().enabled = true; 
+       this.GetComponent<Collider>().enabled = true;
+       if (RenderSettings.skybox.HasProperty("_Tint"))
+       {
+           RenderSettings.skybox.SetColor("_Tint", Color.white);
+       } else if (RenderSettings.skybox.HasProperty("_SkyTint"))
+       {
+           RenderSettings.skybox.SetColor("_SkyTint", Color.white);
+       } 
    }
     IEnumerator Wait() {
        yield return new WaitForSeconds(1);
